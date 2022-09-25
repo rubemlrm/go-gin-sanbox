@@ -7,19 +7,31 @@ import (
 )
 
 // StartApp Exported to deploy the gin server to main entrypoint
-func StartApp() {
+func StartApp() error {
 	cfg, err := config.LoadConfig()
 	if err != nil {
-		panic(err)
+		return err
 	}
-	router := SetupRouter(cfg)
-	router.Run(cfg.Address)
+	router, err := SetupRouter(cfg)
+	if err != nil {
+		return err
+	}
+	err = router.Run(cfg.Address)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 // SetupRouter ...
-func SetupRouter(cfg config.Config) *gin.Engine {
+func SetupRouter(cfg config.Config) (*gin.Engine, error) {
 	router := gin.Default()
-	router.SetTrustedProxies([]string{cfg.TrustedProxies})
+	err := router.SetTrustedProxies([]string{cfg.TrustedProxies})
+
+	if err != nil {
+		return nil, err
+	}
+
 	router.GET("/ping", func(c *gin.Context) {
 		c.String(200, "pong")
 	})
@@ -29,5 +41,5 @@ func SetupRouter(cfg config.Config) *gin.Engine {
 		h := new(controller.HomeController)
 		v1.GET("hello", h.Get)
 	}
-	return router
+	return router, nil
 }

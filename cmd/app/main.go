@@ -5,5 +5,8 @@ import (
 )
 
 func main() {
-	app.StartApp()
+	err := app.StartApp()
+	if err != nil {
+		panic(err)
+	}
 }

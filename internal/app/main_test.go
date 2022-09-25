@@ -16,7 +16,7 @@ func TestPingRoute(t *testing.T) {
 		Address:        ":8080",
 	}
 
-	router := app.SetupRouter(cfg)
+	router, _ := app.SetupRouter(cfg)
 
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", "/ping", nil)

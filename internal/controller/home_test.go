@@ -16,7 +16,7 @@ func TestHelloRoute(t *testing.T) {
 		Address:        ":8080",
 	}
 
-	router := app.SetupRouter(cfg)
+	router, _ := app.SetupRouter(cfg)
 
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", "/v1/hello", nil)

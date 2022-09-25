@@ -165,5 +165,5 @@ fabric.properties
 
 # Ignore code-workspaces
 *.code-workspace
-
+__debug_bin
 # End of https://www.toptal.com/developers/gitignore/api/go,goland,visualstudiocode
